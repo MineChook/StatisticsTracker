@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "statisticstracker",
+  "version": "${version}",
+  "name": "StatisticsTracker",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/statisticstracker/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "site.minechook.statisticstracker.client.StatisticsTrackerClient"
+    ],
+    "main": [
+      "site.minechook.statisticstracker.StatisticsTracker"
+    ]
+  },
+  "mixins": [
+    "statisticstracker.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
