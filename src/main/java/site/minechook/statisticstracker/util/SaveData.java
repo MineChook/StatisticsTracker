@@ -1,13 +1,13 @@
 package site.minechook.statisticstracker.util;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SaveData {
     public List<SerializableBlockStatistic> blockBrokenStatistics = new ArrayList<>();
     public boolean toggled = false;
+    public int color = 0xFFFFFFFF;
+    public Util.CornerPositions cornerPosition = Util.CornerPositions.TOP_LEFT;
     
     public static class SerializableBlockStatistic {
         public String blockId;

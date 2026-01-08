@@ -25,6 +25,8 @@ public class Configuration {
     private static final File CONFIG_PATH = new File("config/statisticstracker.json");
 
     private static boolean toggled = true;
+    private static int color = 0xFFFFFFFF;
+    private static Util.CornerPositions cornerPosition = Util.CornerPositions.TOP_LEFT;
 
     public static List<Util.BlockBrokenStatistic> blockBrokenStatistics;
 
@@ -44,6 +46,22 @@ public class Configuration {
         Configuration.toggled = toggled;
     }
 
+    public static int getColor() {
+        return color;
+    }
+
+    public static void setColor(int color) {
+        Configuration.color = color;
+    }
+
+    public static Util.CornerPositions getCornerPosition() {
+        return cornerPosition;
+    }
+
+    public static void setCornerPosition(Util.CornerPositions cornerPosition) {
+        Configuration.cornerPosition = cornerPosition;
+    }
+
     public static Screen getConfigScreen(Screen parent) {
 
         ConfigBuilder builder = ConfigBuilder.create()
@@ -59,6 +77,16 @@ public class Configuration {
         general.addEntry(entryBuilder.startBooleanToggle(Text.translatable("key.minechook.statistics_tracker.toggle"), toggled)
                 .setDefaultValue(false)
                 .setSaveConsumer(Configuration::setToggled)
+                .build());
+
+        general.addEntry(entryBuilder.startAlphaColorField(Text.translatable("color.minechook.statistics_tracker.text_color"), color)
+                .setDefaultValue(0xFFFFFFFF)
+                .setSaveConsumer(Configuration::setColor)
+                .build());
+
+        general.addEntry(entryBuilder.startEnumSelector(Text.translatable("position.minechook.statistics_tracker"), Util.CornerPositions.class, cornerPosition)
+                .setDefaultValue(Util.CornerPositions.TOP_LEFT)
+                .setSaveConsumer(Configuration::setCornerPosition)
                 .build());
 
         ConfigCategory blocksBroken = builder.getOrCreateCategory(Text.translatable("clothconfig-category.minechook.statistics_tracker.blocks_broken"));
@@ -81,7 +109,8 @@ public class Configuration {
         try (FileWriter writer = new FileWriter(CONFIG_PATH)) {
             SaveData config = new SaveData();
             config.toggled = toggled;
-
+            config.color = color;
+            config.cornerPosition = cornerPosition;
             config.blockBrokenStatistics = new ArrayList<>();
             for (Util.BlockBrokenStatistic stat : blockBrokenStatistics) {
                 String blockId = Registries.BLOCK.getId(stat.block).toString();
@@ -113,15 +142,15 @@ public class Configuration {
                     }
                 }
                 toggled = config.toggled;
+                color = config.color;
+                cornerPosition = config.cornerPosition;
             } else {
                 blockBrokenStatistics = initializeBlocksList();
-                toggled = false;
             }
             RenderOverlay.blockBrokenStatistics = blockBrokenStatistics;
         } catch (Exception e) {
             StatisticsTrackerClient.LOGGER.warning("Failed to load config, using defaults: " + e.getMessage());
             blockBrokenStatistics = initializeBlocksList();
-            toggled = false;
             save();
             RenderOverlay.blockBrokenStatistics = blockBrokenStatistics;
         }

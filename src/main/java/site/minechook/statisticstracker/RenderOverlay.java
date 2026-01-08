@@ -23,7 +23,32 @@ public class RenderOverlay {
                 if (blockBrokenStatistic.toggled) {
                     Text blockName = Text.translatable(blockBrokenStatistic.block.getTranslationKey());
                     Text text = Text.literal(blockName.getString() + ": " + blockBrokenStatistic.count);
-                    drawContext.drawText(client.textRenderer, text, 20, 20 - (i * 10), 0xFF000000, false);
+                    if (Configuration.getCornerPosition() == null) return;
+                    int x = 0, y = 0;
+                    boolean bottom = false;
+                    if (Configuration.getCornerPosition() == Util.CornerPositions.TOP_LEFT) {
+                        x = 10;
+                        y = 10;
+                    }
+                    if (Configuration.getCornerPosition() == Util.CornerPositions.TOP_RIGHT) {
+                        x = MinecraftClient.getInstance().getWindow().getScaledWidth() - text.toString().length() / 2 * 9;
+                        y = 10;
+                    }
+                    if (Configuration.getCornerPosition() == Util.CornerPositions.BOTTOM_LEFT) {
+                        x = 10;
+                        y = MinecraftClient.getInstance().getWindow().getScaledHeight() - 20;
+                        bottom = true;
+                    }
+                    if (Configuration.getCornerPosition() == Util.CornerPositions.BOTTOM_RIGHT) {
+                        x = MinecraftClient.getInstance().getWindow().getScaledWidth() - text.toString().length() / 2 * 9;
+                        y = MinecraftClient.getInstance().getWindow().getScaledHeight() - 20;
+                        bottom = true;
+                    }
+                    if (bottom) {
+                        drawContext.drawText(client.textRenderer, text, x, y - (i * 10), Configuration.getColor(), false);
+                    } else {
+                        drawContext.drawText(client.textRenderer, text, x, y + (i * 10), Configuration.getColor(), false);
+                    }
                     i++;
                 }
             }

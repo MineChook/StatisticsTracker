@@ -22,6 +22,13 @@ public class Util {
         }
     }
 
+    public enum CornerPositions {
+        TOP_LEFT,
+        TOP_RIGHT,
+        BOTTOM_LEFT,
+        BOTTOM_RIGHT;
+    }
+
     public static int getBlockMinedStatistics(Block block) {
         MinecraftClient client = MinecraftClient.getInstance();
 
