@@ -11,11 +11,9 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "site.minechook.statisticstracker.client.StatisticsTrackerClient"
+      "site.minechook.statisticstracker.StatisticsTrackerClient"
     ],
-    "main": [
-      "site.minechook.statisticstracker.StatisticsTracker"
-    ]
+    "modmenu": [ "site.minechook.statisticstracker.config.ModMenuImpl" ]
   },
   "mixins": [
     "statisticstracker.mixins.json"
@@ -23,6 +21,16 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft_version}",
+    "fabric-key-binding-api-v1": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/jEGF5fb"
+      },
+      "badges": [],
+      "update_checker": true
+    }
   }
 }
