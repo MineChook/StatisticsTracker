@@ -21,6 +21,7 @@ public class StatisticsTrackerClient implements ClientModInitializer {
 
     public static final Logger LOGGER = Logger.getLogger("statisticstracker");
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
